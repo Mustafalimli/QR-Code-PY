@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>QR Code Generator</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        height: 100%;
+      }
+      .title {
+        padding: 6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+        color: rgb(37, 37, 37);
+      }
+      .form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+      }
+      .form input {
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        width: 50%;
+        background: black;
+        color: white;
+        border: none;
+      }
+      .form button {
+        font-size: 1rem;
+        background: rgb(41, 61, 121);
+        border: none;
+        color: white;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+      }
+      .generated {
+        display: flex;              
+        flex-direction: column;      
+        justify-content: center;     
+        align-items: center;         
+        height: 100vh;               
+      }
+      .generated img {
+        width: 200px;                
+        height: 200px;               
+      }
+      .actions {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .actions button, .actions a {
+        font-size: 1rem;
+        background: rgb(41, 61, 121);
+        border: none;
+        color: white;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">
+      <h2>Insert a Link Down Below</h2>
+    </div>
+    <form class="form" action="/" method="POST">
+      <input type="text" name="link" placeholder="Enter your link here" />
+      <button type="submit">Generate QR Code</button>
+    </form>
+    
+
+    <div class="generated">
+      <img src="{{data}}" alt="QR Code" id="qr-code" />
+      <p>Here is the QR Code You Have Requested</p>
+      
+  
+      <div class="actions">
+        <a id="download-btn" href="{{data}}" download="QR-Code.png">Download QR Code</a>
+      </div>
+    </div>
+
+    <script>
+  
+      document.getElementById('share-btn').addEventListener('click', async () => {
+        const imgSrc = document.getElementById('qr-code').src;
+        try {
+          if (navigator.share) {
+            await navigator.share({
+              title: 'QR Code',
+              text: 'Check out this QR Code!',
+              url: imgSrc
+            });
+          } else {
+            alert('Share API is not supported in this browser.');
+          }
+        } catch (err) {
+          console.error('Error sharing:', err);
+        }
+      });
+    </script>
+  </body>
+</html>
